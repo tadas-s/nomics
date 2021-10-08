@@ -25,7 +25,7 @@ OptionParser.new do |opts|
 end.parse!
 
 begin
-  coins = Nomics::Currency.where(ids: ARGV, convert: options[:convert])
+  coins = Nomics::Currency.fetch(ids: ARGV, convert: options[:convert])
 rescue Nomics::BadApiKey
   puts "Bad or missing API key: '#{Nomics::Currency.api_key}'"
   exit 1

@@ -14,14 +14,14 @@ module Nomics
       "https://api.nomics.com/"
     end
 
-    def self.where(**conditions)
+    def self.fetch(ids: [], convert: nil)
       uri = URI(base_url)
       query = { key: api_key }
 
       uri.path = "/v1/currencies/ticker"
 
-      query[:ids] = conditions.delete(:ids).join(",")
-      query[:convert] = conditions.delete(:convert)
+      query[:ids] = ids.join(",")
+      query[:convert] = convert
 
       uri.query = URI.encode_www_form(query)
 
