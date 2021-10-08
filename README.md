@@ -22,7 +22,13 @@ Or install it yourself as:
 
 ### Currency info using bin/currency script
 
-Example:
+For starters do check out the available options via:
+
+```
+./bin/currency --help
+```
+
+Example of use:
 
 ```
 ./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 BTC
@@ -39,6 +45,30 @@ logo_url: https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies
 status: active
 price: '54812.75095161'
 <...rest of output is skipped...>
+```
+
+The output can be limited to specific attributes, for example:
+
+```
+./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 --show=symbol,name,circulating_supply,max_supply,price BTC ETH
+```
+
+This will produce output:
+
+```yaml
+---
+symbol: BTC
+name: Bitcoin
+circulating_supply: '18838031'
+max_supply: '21000000'
+price: '54654.12584170'
+
+
+---
+symbol: ETH
+name: Ethereum
+circulating_supply: '117844113'
+price: '3633.92244355'
 ```
 
 ## Development

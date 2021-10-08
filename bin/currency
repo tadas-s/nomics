@@ -6,11 +6,17 @@ require "optparse"
 require "nomics"
 require "yaml"
 
+options = {}
+
 OptionParser.new do |opts|
   opts.banner = "Usage: currency [options] COINA COINB ..."
 
   opts.on("-kKEY", "--key=KEY", "Set API key") do |key|
     Nomics::Configuration.api_key = key
+  end
+
+  opts.on("--show=a,b,c", Array, "Display selected currency attributes a,b,c only") do |attributes_to_show_list|
+    options[:show] = attributes_to_show_list
   end
 end.parse!
 
@@ -24,6 +30,9 @@ rescue Nomics::UnknownError
   exit 1
 end
 
-puts coins
-  .map { |c| YAML.dump(c.to_h.transform_keys(&:to_s)) }
-  .join("\n\n")
+coins = coins.map { |c| c.to_h.transform_keys(&:to_s) }
+
+coins = coins.map { |c| c.slice(*options[:show]) } if options.key?(:show) && options[:show].any?
+
+puts coins.map { |c| YAML.dump(c) }
+          .join("\n\n")
