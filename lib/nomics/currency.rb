@@ -13,6 +13,7 @@ module Nomics
       uri.path = "/v1/currencies/ticker"
 
       query[:ids] = conditions.delete(:ids).join(",")
+      query[:convert] = conditions.delete(:convert)
 
       uri.query = URI.encode_www_form(query)
 

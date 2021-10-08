@@ -18,10 +18,14 @@ OptionParser.new do |opts|
   opts.on("--show=a,b,c", Array, "Display selected currency attributes a,b,c only") do |attributes_to_show_list|
     options[:show] = attributes_to_show_list
   end
+
+  opts.on("-cCURRENCY", "--convert=CURRENCY", "Display price in specific currency") do |currency|
+    options[:convert] = currency
+  end
 end.parse!
 
 begin
-  coins = Nomics::Currency.where(ids: ARGV)
+  coins = Nomics::Currency.where(ids: ARGV, convert: options[:convert])
 rescue Nomics::BadApiKey
   puts "Bad or missing API key: '#{Nomics::Configuration.api_key}'"
   exit 1

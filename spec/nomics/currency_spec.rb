@@ -70,5 +70,13 @@ RSpec.describe Nomics::Currency do
 
       expect(coins).to contain_exactly(have_attributes(id: "BTC", name: "Bitcoin"))
     end
+
+    it "allows setting reference/fiat currency for price details" do
+      stub_request(:any, %r{https://nomics\.dev.*})
+        .with(query: hash_including(convert: "GBP"))
+        .to_return(body: '[{"id":"BTC","name":"Bitcoin"}]', headers: { "Content-Type" => "application/json" })
+
+      described_class.where(ids: ["BTC"], convert: "GBP")
+    end
   end
 end

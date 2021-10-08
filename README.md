@@ -28,7 +28,7 @@ For starters do check out the available options via:
 ./bin/currency --help
 ```
 
-Example of use:
+#### Basic Usage
 
 ```
 ./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 BTC
@@ -46,6 +46,8 @@ status: active
 price: '54812.75095161'
 <...rest of output is skipped...>
 ```
+
+#### Limiting/filtering information to display
 
 The output can be limited to specific attributes, for example:
 
@@ -69,6 +71,38 @@ symbol: ETH
 name: Ethereum
 circulating_supply: '117844113'
 price: '3633.92244355'
+```
+
+#### Specifying base/fiat currency for price conversion
+
+Example of BTC price USD:
+
+```
+./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 --show=id,name,price --convert=USD BTC
+```
+
+Output:
+
+```yaml
+---
+id: BTC
+name: Bitcoin
+price: '54721.17866894'
+```
+
+And then in GBP:
+
+```
+./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 --show=id,name,price --convert=GBP BTC
+```
+
+Output:
+
+```yaml
+---
+id: BTC
+name: Bitcoin
+price: '40182.43550499'
 ```
 
 ## Development
