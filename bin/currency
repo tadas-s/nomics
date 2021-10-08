@@ -25,5 +25,5 @@ rescue Nomics::UnknownError
 end
 
 puts coins
-  .map { |c| c.to_yaml(header: false) }
+  .map { |c| YAML.dump(c.to_h.transform_keys(&:to_s)) }
   .join("\n\n")
