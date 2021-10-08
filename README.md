@@ -18,9 +18,28 @@ Or install it yourself as:
 
     $ gem install nomics
 
-## Usage
+## Direct use via command line scripts
 
-TODO: Write usage instructions here
+### Currency info using bin/currency script
+
+Example:
+
+```
+./bin/currency -k f0f1662874adc51af4be4d4aa68c056fec02fea2 BTC
+```
+
+This will output currency details in somewhat readable yaml format:
+
+```yaml
+id: BTC
+currency: BTC
+symbol: BTC
+name: Bitcoin
+logo_url: https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg
+status: active
+price: '54812.75095161'
+<...rest of output is skipped...>
+```
 
 ## Development
 

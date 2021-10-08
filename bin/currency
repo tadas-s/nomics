@@ -14,8 +14,16 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-coins = Nomics::Currency.where(ids: ARGV)
+begin
+  coins = Nomics::Currency.where(ids: ARGV)
+rescue Nomics::BadApiKey
+  puts "Bad or missing API key: '#{Nomics::Configuration.api_key}'"
+  exit 1
+rescue Nomics::UnknownError
+  puts "Other/unknown error"
+  exit 1
+end
 
-puts coins.
-  map { |c| c.to_yaml(header: false) }.
-  join("\n\n")
+puts coins
+  .map { |c| c.to_yaml(header: false) }
+  .join("\n\n")

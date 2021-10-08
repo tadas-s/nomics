@@ -18,9 +18,10 @@ module Nomics
 
       response = Net::HTTP.get_response(uri)
 
-      # TODO: raise errors if:
-      # - !response.is_a?(Net::HTTPSuccess)
-      # - response.content_type is not 'application/json'
+      raise BadApiKey if response.is_a?(Net::HTTPUnauthorized)
+
+      raise UnknownError unless
+        response.is_a?(Net::HTTPSuccess) && response.content_type == "application/json"
 
       currencies = JSON.parse(response.body)
 

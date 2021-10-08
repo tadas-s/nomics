@@ -6,5 +6,8 @@ require_relative "nomics/currency"
 
 module Nomics
   class Error < StandardError; end
-  # Your code goes here...
+
+  class BadApiKey < Error; end
+
+  class UnknownError < Error; end
 end
