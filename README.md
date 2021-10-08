@@ -105,6 +105,20 @@ name: Bitcoin
 price: '40182.43550499'
 ```
 
+### Currency conversions script bin/convert
+
+Converts 1 unit of one currency to another. For example:
+
+```
+./bin/convert -k f0f1662874adc51af4be4d4aa68c056fec02fea2 --from=BTC --to=ETH
+```
+
+Output:
+
+```
+1 BTC = 15.01667479 ETH
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then,

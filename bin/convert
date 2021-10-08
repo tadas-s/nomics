@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "optparse"
+require "nomics"
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: convert [options]"
+
+  opts.on("-kKEY", "--key=KEY", "Set API key") do |key|
+    Nomics::Configuration.api_key = key
+  end
+
+  opts.on("--from=CURRENCYA", "Convert from CURRENCYA") do |from|
+    options[:from] = from
+  end
+
+  opts.on("--to=CURRENCYB", "Convert to CURRENCYB") do |to|
+    options[:to] = to
+  end
+end.parse!
+
+if options[:from].blank? || options[:to].blank?
+  puts "Must specify both '--from' and '--to' options"
+  exit 1
+end
+
+begin
+  coin = Nomics::Currency.where(ids: [options[:from]], convert: options[:to]).first
+rescue Nomics::BadApiKey
+  puts "Bad or missing API key: '#{Nomics::Configuration.api_key}'"
+  exit 1
+rescue Nomics::UnknownError
+  puts "Other/unknown error"
+  exit 1
+end
+
+puts "1 #{options[:from]} = #{coin.price} #{options[:to]}"
