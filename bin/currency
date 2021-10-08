@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "optparse"
+require "nomics"
+require "yaml"
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: currency [options] COINA COINB ..."
+
+  opts.on("-kKEY", "--key=KEY", "Set API key") do |key|
+    Nomics::Configuration.api_key = key
+  end
+end.parse!
+
+coins = Nomics::Currency.where(ids: ARGV)
+
+puts coins.
+  map { |c| c.to_yaml(header: false) }.
+  join("\n\n")
