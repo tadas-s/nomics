@@ -12,7 +12,7 @@ OptionParser.new do |opts|
   opts.banner = "Usage: currency [options] COINA COINB ..."
 
   opts.on("-kKEY", "--key=KEY", "Set API key") do |key|
-    Nomics::Configuration.api_key = key
+    Nomics::Currency.api_key = key
   end
 
   opts.on("--show=a,b,c", Array, "Display selected currency attributes a,b,c only") do |attributes_to_show_list|
@@ -27,7 +27,7 @@ end.parse!
 begin
   coins = Nomics::Currency.where(ids: ARGV, convert: options[:convert])
 rescue Nomics::BadApiKey
-  puts "Bad or missing API key: '#{Nomics::Configuration.api_key}'"
+  puts "Bad or missing API key: '#{Nomics::Currency.api_key}'"
   exit 1
 rescue Nomics::UnknownError
   puts "Other/unknown error"

@@ -1,14 +1,22 @@
 # frozen_string_literal: true
 
 require "ostruct"
+require "active_support/configurable"
 require "net/http"
 require "json"
 
 module Nomics
   class Currency < OpenStruct
+    include ActiveSupport::Configurable
+
+    config_accessor :api_key
+    config_accessor :base_url do
+      "https://api.nomics.com/"
+    end
+
     def self.where(**conditions)
-      uri = URI(Configuration.base_url)
-      query = { key: Configuration.api_key }
+      uri = URI(base_url)
+      query = { key: api_key }
 
       uri.path = "/v1/currencies/ticker"
 

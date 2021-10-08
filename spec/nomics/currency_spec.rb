@@ -2,13 +2,13 @@
 
 RSpec.describe Nomics::Currency do
   before do
-    Nomics::Configuration.base_url = "https://nomics.dev/"
-    Nomics::Configuration.api_key = "ffffffff-ffff-ffff-ffff-ffffffffffff"
+    described_class.base_url = "https://nomics.dev/"
+    described_class.api_key = "ffffffff-ffff-ffff-ffff-ffffffffffff"
   end
 
   describe ".where" do
     it "uses the configured base url" do
-      Nomics::Configuration.base_url = "https://example.org/"
+      described_class.base_url = "https://example.org/"
 
       stub_request(:any, %r{https://example\.org\.*})
         .to_return(body: "[]", headers: { "Content-Type" => "application/json" })
@@ -17,7 +17,7 @@ RSpec.describe Nomics::Currency do
     end
 
     it "uses the configured api key" do
-      Nomics::Configuration.api_key = "e78d147a-e04e-438d-b0c6-a36ec93403a8"
+      described_class.api_key = "e78d147a-e04e-438d-b0c6-a36ec93403a8"
 
       stub_request(:any, %r{https://nomics\.dev.*})
         .with(query: hash_including(key: "e78d147a-e04e-438d-b0c6-a36ec93403a8"))
